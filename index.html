@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Check‑list HACCP</title>
+  <title>Check-list HACCP</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Google Font -->
@@ -19,10 +19,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>Check‑list per Piano di Autocontrollo HACCP</h1>
+    <h1>Check-list per Piano di Autocontrollo HACCP</h1>
+
     <form id="formChecklist"
-          action="https://script.google.com/macros/s/AKfycbyHGMhNdSKtoGO8nggvpgXNKBPB6m-2qOLeJ2ehRKyJRHp7Yy3nOzZc6-B-jXVvmZE2/exec"
-          method="post" target="hidden_iframe">
+          action="https://script.google.com/macros/s/AKfycbzW-1rHJLNEGHMgXx7Ff0uoiKEy4gasSxgYHAXyGDYALRX8EPtr3rvExNBRn494eIoe/exec"
+          method="post"
+          target="hidden_iframe">
+
+      <!-- Campo nascosto per il JSON -->
       <input type="hidden" id="payload" name="payload">
 
       <!-- Sezione 1: Dati Aziendali -->
@@ -31,21 +35,21 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <label class="form-label">Ragione Sociale</label>
-            <input id="ragioneSociale" class="form-control">
+            <input id="ragioneSociale" class="form-control" placeholder="">
           </div>
           <div class="col-md-6">
             <label class="form-label">Indirizzo Sede Legale</label>
-            <input id="sedeLegale" class="form-control">
+            <input id="sedeLegale" class="form-control" placeholder="">
           </div>
         </div>
         <div class="row mb-3">
           <div class="col-md-6">
             <label class="form-label">Indirizzo Sede Operativa</label>
-            <input id="sedeOperativa" class="form-control">
+            <input id="sedeOperativa" class="form-control" placeholder="">
           </div>
           <div class="col-md-6">
             <label class="form-label">Rappresentante Legale</label>
-            <input id="rappresentante" class="form-control">
+            <input id="rappresentante" class="form-control" placeholder="">
           </div>
         </div>
         <div class="row mb-3">
@@ -55,39 +59,39 @@
           </div>
           <div class="col-md-4">
             <label class="form-label">Luogo di Nascita</label>
-            <input id="luogoNascita" class="form-control">
+            <input id="luogoNascita" class="form-control" placeholder="">
           </div>
           <div class="col-md-4">
             <label class="form-label">Responsabile HACCP</label>
-            <input id="respHACCP" class="form-control">
+            <input id="respHACCP" class="form-control" placeholder="">
           </div>
         </div>
         <div class="row mb-3">
           <div class="col-md-4">
             <label class="form-label">PEC / Codice Univoco</label>
-            <input id="pec" class="form-control">
+            <input id="pec" class="form-control" placeholder="">
           </div>
           <div class="col-md-4">
             <label class="form-label">P.IVA</label>
-            <input id="piva" class="form-control">
+            <input id="piva" class="form-control" placeholder="">
           </div>
           <div class="col-md-4">
             <label class="form-label">Codice Fiscale</label>
-            <input id="codFiscale" class="form-control">
+            <input id="codFiscale" class="form-control" placeholder="">
           </div>
         </div>
         <div class="row mb-3">
           <div class="col-md-4">
             <label class="form-label">Telefono</label>
-            <input id="telefono" class="form-control">
+            <input id="telefono" class="form-control" placeholder="">
           </div>
           <div class="col-md-4">
             <label class="form-label">Tipo di Attività</label>
-            <input id="tipoAttivita" class="form-control">
+            <input id="tipoAttivita" class="form-control" placeholder="">
           </div>
           <div class="col-md-4">
             <label class="form-label">Registrazione GISA / Numero</label>
-            <input id="gisa" class="form-control">
+            <input id="gisa" class="form-control" placeholder="">
           </div>
         </div>
       </div>
@@ -100,37 +104,56 @@
         </button>
         <table class="table table-bordered" id="tableWorkers">
           <thead>
-            <tr><th>Funzione</th><th>Nome e Cognome</th><th>Qualifica</th><th></th></tr>
+            <tr>
+              <th>Funzione</th>
+              <th>Nome e Cognome</th>
+              <th>Qualifica</th>
+              <th>Rimuovi</th>
+            </tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
 
-      <!-- Sezione 3: Attrezzature -->
+      <!-- Sezione 3: Elenco Attrezzature -->
       <div class="section">
         <h4>Elenco Attrezzature</h4>
         <button type="button" class="btn btn-sm btn-secondary btn-add" id="addEquip">
           <i class="fas fa-plus"></i> Aggiungi
         </button>
         <table class="table table-bordered" id="tableEquip">
-          <thead><tr><th>Descrizione</th><th></th></tr></thead><tbody></tbody>
+          <thead>
+            <tr>
+              <th>Descrizione</th>
+              <th>Rimuovi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
         </table>
       </div>
 
-      <!-- Sezione 4: Fornitori -->
+      <!-- Sezione 4: Elenco Fornitori -->
       <div class="section">
         <h4>Elenco Fornitori</h4>
         <button type="button" class="btn btn-sm btn-success btn-add" id="addSupplier">
           <i class="fas fa-plus"></i> Aggiungi
         </button>
         <table class="table table-bordered" id="tableSuppliers">
-          <thead><tr><th>Fornitore</th><th>Indirizzo</th><th>Prodotto</th><th></th></tr></thead><tbody></tbody>
+          <thead>
+            <tr>
+              <th>Fornitore</th>
+              <th>Indirizzo</th>
+              <th>Prodotto</th>
+              <th>Rimuovi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
         </table>
       </div>
 
       <div class="text-center mb-5">
         <button type="submit" class="btn btn-lg btn-primary" id="btnSubmit">
-          <i class="fas fa-save"></i> Salva Check‑list
+          <i class="fas fa-save"></i> Salva Check-list
         </button>
       </div>
     </form>
@@ -139,33 +162,39 @@
   <!-- iframe invisibile per il POST -->
   <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-  <!-- Bootstrap & JS -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      function addRow(tableId, cols) {
+      // Funzione per aggiungere una riga alle tabelle
+      function addRow(tableId, colsHtml) {
         const tr = document.createElement('tr');
-        tr.innerHTML = cols + '<td><button type="button" class="btn btn-sm btn-danger remove-row"><i class="fas fa-trash"></i></button></td>';
+        tr.innerHTML = colsHtml + '<td><button type="button" class="btn btn-sm btn-danger remove-row"><i class="fas fa-trash"></i></button></td>';
         document.querySelector(tableId + ' tbody').appendChild(tr);
       }
+      // Aggiungi membro gruppo di lavoro
       document.getElementById('addWorker').onclick = () => addRow('#tableWorkers',
         '<td><input class="form-control" placeholder="Funzione"></td>' +
         '<td><input class="form-control" placeholder="Nome e Cognome"></td>' +
         '<td><input class="form-control" placeholder="Qualifica"></td>'
       );
+      // Aggiungi attrezzatura
       document.getElementById('addEquip').onclick = () => addRow('#tableEquip',
         '<td><input class="form-control" placeholder="Descrizione"></td>'
       );
+      // Aggiungi fornitore
       document.getElementById('addSupplier').onclick = () => addRow('#tableSuppliers',
         '<td><input class="form-control" placeholder="Fornitore"></td>' +
         '<td><input class="form-control" placeholder="Indirizzo"></td>' +
         '<td><input class="form-control" placeholder="Prodotto"></td>'
       );
+      // Rimuovi riga
       document.body.addEventListener('click', e => {
         if (e.target.closest('.remove-row')) e.target.closest('tr').remove();
       });
+      // Prima del submit, costruisci il payload JSON
       document.getElementById('formChecklist').addEventListener('submit', e => {
-        const payload = {
+        const p = {
           ragioneSociale:  document.getElementById('ragioneSociale').value,
           sedeLegale:      document.getElementById('sedeLegale').value,
           sedeOperativa:   document.getElementById('sedeOperativa').value,
@@ -179,32 +208,39 @@
           telefono:        document.getElementById('telefono').value,
           tipoAttivita:    document.getElementById('tipoAttivita').value,
           gisa:            document.getElementById('gisa').value,
-          workers:         [], equipment: [], suppliers: []
+          workers:         [],
+          equipment:       [],
+          suppliers:       []
         };
+        // Raccogli workers
         document.querySelectorAll('#tableWorkers tbody tr').forEach(tr => {
-          payload.workers.push({
-            funzione: tr.children[0].querySelector('input').value,
-            nome:     tr.children[1].querySelector('input').value,
-            qualifica:tr.children[2].querySelector('input').value
+          p.workers.push({
+            funzione:  tr.children[0].querySelector('input').value,
+            nome:      tr.children[1].querySelector('input').value,
+            qualifica: tr.children[2].querySelector('input').value
           });
         });
+        // Raccogli equipment
         document.querySelectorAll('#tableEquip tbody tr').forEach(tr => {
-          payload.equipment.push(tr.children[0].querySelector('input').value);
+          p.equipment.push(tr.children[0].querySelector('input').value);
         });
+        // Raccogli suppliers
         document.querySelectorAll('#tableSuppliers tbody tr').forEach(tr => {
-          payload.suppliers.push({
+          p.suppliers.push({
             fornitore: tr.children[0].querySelector('input').value,
             indirizzo: tr.children[1].querySelector('input').value,
             prodotto:  tr.children[2].querySelector('input').value
           });
         });
-        document.getElementById('payload').value = JSON.stringify(payload);
+        // Inserisci JSON nel campo nascosto
+        document.getElementById('payload').value = JSON.stringify(p);
       });
+      // Alert di conferma dopo POST
       let pending = false;
       document.getElementById('formChecklist').addEventListener('submit', () => { pending = true; });
       document.getElementById('hidden_iframe').onload = () => {
         if (pending) {
-          alert('✅ Check‑list salvata su Google Sheets!');
+          alert('✅ Check-list salvata su Google Sheets!');
           document.getElementById('formChecklist').reset();
           pending = false;
         }
