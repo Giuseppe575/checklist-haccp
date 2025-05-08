@@ -17,12 +17,11 @@
     .btn-add { margin-bottom:1rem; }
   </style>
 </head>
-<body>
-  <div class="container">
+<body>s="container">
     <h1 class="mb-4">Check-list per Piano di Autocontrollo HACCP</h1>
 
    <form id="formChecklist"
-      action="https://script.google.com/macros/s/AKfycbwRJU9Clp58a_vIQsmFOw09yljF1y_N7q6sAbBW7jL4f14aiBG59nP7DZ_qFLXhZm-n/exec"
+      action="https://script.google.com/macros/s/AKfycbznQNnn_okQu6rllzSVgry76FiWrEyBCce7gA33shTmTFR-yGA57TyG_U7oW1tLkqiL/exec"
       method="post"
       target="hidden_iframe">
 
@@ -181,33 +180,49 @@
   </div>
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">    const canvas = document.getElementById("firmaCanvas");
-    const ctx = canvas.getContext("2d");
-    let drawing = false;
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("firmaCanvas");
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      let drawing = false;
 
-    canvas.addEventListener("mousedown", () => drawing = true);
-    canvas.addEventListener("mouseup", () => {
-      drawing = false;
-      document.getElementById("firma").value = canvas.toDataURL("image/png");
-    });
-    canvas.addEventListener("mouseout", () => drawing = false);
-    canvas.addEventListener("mousemove", e => {
-      if (!drawing) return;
-      const rect = canvas.getBoundingClientRect();
-      ctx.lineWidth = 2;
-      ctx.lineCap = "round";
-      ctx.strokeStyle = "#003366";
-      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-    });
+      canvas.addEventListener("mousedown", () => {
+        drawing = true;
+        ctx.beginPath();
+      });
 
-    document.getElementById("clearFirma").addEventListener("click", () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      document.getElementById("firma").value = "";
-    });
-  </script>
+      canvas.addEventListener("mouseup", () => {
+        drawing = false;
+        document.getElementById("firma").value = canvas.toDataURL("image/png");
+        ctx.beginPath();
+      });
+
+      canvas.addEventListener("mouseout", () => {
+        drawing = false;
+        ctx.beginPath();
+      });
+
+      canvas.addEventListener("mousemove", (e) => {
+        if (!drawing) return;
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#003366";
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+      });
+
+      document.getElementById("clearFirma").addEventListener("click", () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.getElementById("firma").value = "";
+      });
+    }
+  });
+</script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       function addRow(tableId, colsHtml) {
