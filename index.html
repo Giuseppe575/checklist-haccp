@@ -143,6 +143,32 @@
         </table>
       </div>
 
+      <!-- Sezione 5: Dati Economici -->
+      <div class="section">
+        <h4>Informazioni Economiche</h4>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label" for="pagamento">Modalità di Pagamento</label>
+            <select id="pagamento" class="form-select">
+              <option value="">Seleziona</option>
+              <option value="contanti">Contanti</option>
+              <option value="assegno">Assegno</option>
+              <option value="bonifico">Bonifico</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="costo">Costo del Servizio (€)</label>
+            <input type="text" id="costo" class="form-control" placeholder="Inserisci l'importo">
+          </div>
+          <div class="col-md-4">
+  <label class="form-label" for="firmaCanvas">Firma Digitale del Cliente</label>
+  <canvas id="firmaCanvas" width="300" height="100" style="border: 1px solid #ccc; border-radius: 5px; cursor: crosshair;"></canvas>
+  <input type="hidden" id="firma" name="firma">
+  <button type="button" class="btn btn-sm btn-warning mt-2" id="clearFirma">Cancella Firma</button>
+</div>
+        </div>
+      </div>
+
       <div class="text-center mb-5">
         <button type="submit" class="btn btn-lg btn-primary" id="btnSubmit">
           <i class="fas fa-save"></i> Salva Check-list
@@ -155,7 +181,33 @@
   </div>
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">    const canvas = document.getElementById("firmaCanvas");
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+
+    canvas.addEventListener("mousedown", () => drawing = true);
+    canvas.addEventListener("mouseup", () => {
+      drawing = false;
+      document.getElementById("firma").value = canvas.toDataURL("image/png");
+    });
+    canvas.addEventListener("mouseout", () => drawing = false);
+    canvas.addEventListener("mousemove", e => {
+      if (!drawing) return;
+      const rect = canvas.getBoundingClientRect();
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "#003366";
+      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    });
+
+    document.getElementById("clearFirma").addEventListener("click", () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      document.getElementById("firma").value = "";
+    });
+  </script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       function addRow(tableId, colsHtml) {
@@ -200,7 +252,10 @@
           gisa:           document.getElementById('gisa').value,
           workers:        [],
           equipment:      [],
-          suppliers:      []
+          suppliers:      [],
+          pagamento:      document.getElementById('pagamento').value,
+          costo:          document.getElementById('costo').value,
+          firma:          document.getElementById('firma').value
         };
         document.querySelectorAll('#tableWorkers tbody tr').forEach(tr => {
           p.workers.push({
@@ -235,3 +290,4 @@
   </script>
 </body>
 </html>
+
