@@ -101,20 +101,63 @@
         const ctx = canvas.getContext("2d");
         let drawing = false;
 
-        canvas.addEventListener("mousedown", () => { drawing = true; ctx.beginPath(); });
-        canvas.addEventListener("mouseup", () => { drawing = false; document.getElementById("firma").value = canvas.toDataURL("image/png"); });
-        canvas.addEventListener("mouseout", () => { drawing = false; });
-
-        canvas.addEventListener("mousemove", e => {
-          if (!drawing) return;
-          const rect = canvas.getBoundingClientRect();
-          ctx.lineWidth = 2; ctx.lineCap = "round"; ctx.strokeStyle = "#003366";
-          ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        function drawLine(x, y) {
+          ctx.lineWidth = 2;
+          ctx.lineCap = "round";
+          ctx.strokeStyle = "#003366";
+          ctx.lineTo(x, y);
           ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+        }
+
+        canvas.addEventListener("mousedown", (e) => {
+          drawing = true;
+          const rect = canvas.getBoundingClientRect();
           ctx.beginPath();
           ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
         });
 
+        canvas.addEventListener("mousemove", (e) => {
+          if (!drawing) return;
+          const rect = canvas.getBoundingClientRect();
+          drawLine(e.clientX - rect.left, e.clientY - rect.top);
+        });
+
+        canvas.addEventListener("mouseup", () => {
+          drawing = false;
+          document.getElementById("firma").value = canvas.toDataURL("image/png");
+          ctx.beginPath();
+        });
+
+        canvas.addEventListener("mouseout", () => {
+          drawing = false;
+          ctx.beginPath();
+        });
+
+        // Touch support
+        canvas.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          drawing = true;
+          const rect = canvas.getBoundingClientRect();
+          const touch = e.touches[0];
+          ctx.beginPath();
+          ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        });
+
+        canvas.addEventListener("touchmove", (e) => {
+          e.preventDefault();
+          if (!drawing) return;
+          const rect = canvas.getBoundingClientRect();
+          const touch = e.touches[0];
+          drawLine(touch.clientX - rect.left, touch.clientY - rect.top);
+        });
+
+        canvas.addEventListener("touchend", () => {
+          drawing = false;
+          document.getElementById("firma").value = canvas.toDataURL("image/png");
+          ctx.beginPath();
+        });
         document.getElementById("clearFirma").addEventListener("click", () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           document.getElementById("firma").value = "";
