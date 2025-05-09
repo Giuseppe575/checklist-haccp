@@ -159,9 +159,25 @@
           ctx.beginPath();
         });
         document.getElementById("clearFirma").addEventListener("click", () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          document.getElementById("firma").value = "";
-        });
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  document.getElementById("firma").value = "";
+});
+
+// Pulsante per scaricare la firma come immagine PNG
+const downloadButton = document.createElement("button");
+downloadButton.className = "btn btn-sm btn-info mt-2 ms-2";
+downloadButton.innerHTML = '<i class="fas fa-download"></i> Scarica Firma';
+downloadButton.type = "button";
+downloadButton.onclick = () => {
+  const dataUrl = canvas.toDataURL("image/png");
+  const link = document.createElement("a");
+  link.href = dataUrl;
+  link.download = "firma_cliente.png";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+document.getElementById("clearFirma").parentElement.appendChild(downloadButton);
       }
 
       function addRow(tableId, colsHtml) {
