@@ -145,7 +145,8 @@
       });
 
       let pending = false;
-      document.getElementById('formChecklist').addEventListener('submit', e => {
+      document.getElementById('formChecklist').addEventListener('submit', function(e) {
+        e.preventDefault();
         pending = true;
         const p = {
           ragioneSociale: document.getElementById('ragioneSociale').value,
@@ -186,6 +187,7 @@
           });
         });
         document.getElementById('payload').value = JSON.stringify(p);
+        this.submit();
       });
 
       document.getElementById('hidden_iframe').onload = () => {
@@ -199,3 +201,4 @@
   </script>
 </body>
 </html>
+
